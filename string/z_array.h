@@ -1,16 +1,28 @@
-#include <array>
 #include <algorithm>
+#include <string>
 #include <vector>
 
 struct ZArray
 {
-    const std::string origin;
     std::vector<int> arr;
 
-    ZArray(const std::string& origin) :
+    ZArray(const std::vector<int>& arr) :
+        arr(arr)
+    {}
+};
+
+struct ZArrayFactory
+{
+    const std::string& origin;
+
+    ZArrayFactory(const std::string& origin) :
         origin(origin)
+    {}
+
+    ZArray create()
     {
         int n = origin.length();
+        std::vector<int> arr(n);
         std::fill_n(arr.begin(), n, 0);
 
         for (int i = 1, l = 0, r = 0; i < n; ++i)
@@ -27,5 +39,7 @@ struct ZArray
                 l = i;
             }
         }
+
+        return ZArray(arr);
     }
 };
