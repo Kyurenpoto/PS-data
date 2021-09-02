@@ -4,9 +4,11 @@
 
 struct ZArray
 {
-    std::vector<int> arr;
+    const std::string& origin;
+    const std::vector<int> arr;
 
-    ZArray(const std::vector<int>& arr) :
+    ZArray(const std::string& origin, const std::vector<int>& arr) :
+        origin(origin),
         arr(arr)
     {}
 };
@@ -40,6 +42,6 @@ struct ZArrayFactory
             }
         }
 
-        return ZArray(arr);
+        return ZArray(origin, arr);
     }
 };

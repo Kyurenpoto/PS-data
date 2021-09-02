@@ -6,25 +6,27 @@
 
 struct SuffixArray
 {
-    std::vector<int> arr;
+    const std::string& origin;
+    const std::vector<int> arr;
 
-    SuffixArray(const std::vector<int>& arr) :
+    SuffixArray(const std::string& origin, const std::vector<int>& arr) :
+        origin(origin),
         arr(arr)
     {}
 
-    auto lowerbound(const std::string& origin, const std::string& pattern) const
+    auto lowerbound(const std::string& pattern) const
     {
         return std::lower_bound(arr.begin(), arr.end(), pattern,
-            [&origin](const int& idx, const std::string& x)
+            [this](const int& idx, const std::string& x)
             {
                 return origin.substr(idx, x.length()) < x;
             });
     }
 
-    auto upperbound(const std::string& origin, const std::string& pattern) const
+    auto upperbound(const std::string& pattern) const
     {
         return std::upper_bound(arr.begin(), arr.end(), pattern,
-            [&origin](const std::string& x, const int& idx)
+            [this](const std::string& x, const int& idx)
             {
                 return x < origin.substr(idx, x.length());
             });
@@ -155,6 +157,6 @@ struct SuffixArrayFactory
             rank.update(arr, d);
         }
 
-        return SuffixArray(arr);
+        return SuffixArray(origin, arr);
     }
 };

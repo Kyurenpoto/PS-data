@@ -2,9 +2,11 @@
 
 struct LongestCommonPrefix
 {
-    std::vector<int> arr;
+    const std::string& origin;
+    const std::vector<int> arr;
 
-    LongestCommonPrefix(const std::vector<int>& arr) :
+    LongestCommonPrefix(const std::string& origin, const std::vector<int>& arr) :
+        origin(origin),
         arr(arr)
     {}
 };
@@ -38,6 +40,6 @@ struct LongestCommonPrefixFactory
                 k = std::max(0, k - 1);
             }
 
-        return LongestCommonPrefix(arr);
+        return LongestCommonPrefix(origin, arr);
     }
 };
