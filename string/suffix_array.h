@@ -33,7 +33,7 @@ struct SuffixArray
 
 struct SuffixArrayFactory
 {
-    std::string origin;
+    const std::string& origin;
 
     SuffixArrayFactory(const std::string& origin) :
         origin(origin)

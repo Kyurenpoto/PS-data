@@ -1,28 +1,43 @@
 #include "suffix_array.h"
 
-struct LongestCommonPrefixArray
+struct LongestCommonPrefix
 {
-    SuffixArray suffixArray;
     std::vector<int> arr;
 
-    LongestCommonPrefixArray(const std::string& origin) :
-        suffixArray(origin)
+    LongestCommonPrefix(const std::vector<int>& arr) :
+        arr(arr)
+    {}
+};
+
+struct LongestCommonPrefixFactory
+{
+    const std::string& origin;
+
+    LongestCommonPrefixFactory(const std::string& origin) :
+        origin(origin)
+    {}
+
+    LongestCommonPrefix create()
     {
         const int n = origin.size();
+        std::vector<int> arr(n);
         std::vector<int> inverseSuffixArray(n);
+        SuffixArray suffixArray(SuffixArrayFactory(origin).create());
 
         for (int i = 0; i < n; ++i)
-            inverseSuffixArray[suffixArray[i]] = i;
+            inverseSuffixArray[suffixArray.arr[i]] = i;
 
         for (int i = 0, k = 0; i < n; ++i)
             if (inverseSuffixArray[i] > 0)
             {
-                for (; suffixArray[inverseSuffixArray[i] - 1] + k < n &&
-                    origin[i + k] == origin[suffixArray[inverseSuffixArray[i] - 1] + k];
+                for (; suffixArray.arr[inverseSuffixArray[i] - 1] + k < n &&
+                    origin[i + k] == origin[suffixArray.arr[inverseSuffixArray[i] - 1] + k];
                     ++k);
                 
                 arr[inverseSuffixArray[i]] = k;
                 k = std::max(0, k - 1);
             }
+
+        return LongestCommonPrefix(arr);
     }
 };
