@@ -11,13 +11,13 @@ struct DisjointSet
     DisjointSet()
     {
         std::iota(parent, parent + N, 0);
-        std::iota(size, size + N, 0);
+        std::fill(size, size + N, 1);
     }
 
     void unionTrees(int a, int b)
     {
-        a = find(a);
-        b = find(b);
+        a = findRoot(a);
+        b = findRoot(b);
         
         if (size[a] < size[b])
             mergeTrees(b, a);
