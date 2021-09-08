@@ -10,8 +10,8 @@ struct DisjointSet
 
     DisjointSet()
     {
-        std::iota(parent, parent + N, 0);
-        std::fill(size, size + N, 1);
+        std::iota(parent.begin(), parent.end(), 0);
+        std::fill(size.begin(), size.end(), 1);
     }
 
     void unionTrees(int a, int b)
